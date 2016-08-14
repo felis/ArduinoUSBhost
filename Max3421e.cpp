@@ -3,6 +3,7 @@
 #include "Max3421e.h"
 // #include "Max3421e_constants.h"
 
+
 static byte vbusState;
 
 /* Functions    */
@@ -46,8 +47,8 @@ void MAX3421E::toggle( byte pin )
 void MAX3421E::regWr( byte reg, byte val)
 {
       Select_MAX3421E;
-      Spi.transfer( reg + 2 ); //set WR bit and send register number
-      Spi.transfer( val );
+      SPI.transfer( reg + 2 ); //set WR bit and send register number
+      SPI.transfer( val );
       Deselect_MAX3421E;
 }
 /* multiple-byte write */
@@ -55,9 +56,9 @@ void MAX3421E::regWr( byte reg, byte val)
 char * MAX3421E::bytesWr( byte reg, byte nbytes, char * data )
 {
     Select_MAX3421E;            //assert SS
-    Spi.transfer ( reg + 2 );   //set W/R bit and select register   
+    SPI.transfer ( reg + 2 );   //set W/R bit and select register   
     while( nbytes ) {                
-        Spi.transfer( *data );  // send the next data byte
+        SPI.transfer( *data );  // send the next data byte
         data++;                 // advance the pointer
         nbytes--;
     }
@@ -69,8 +70,8 @@ byte MAX3421E::regRd( byte reg )
 {
   byte tmp;
     Select_MAX3421E;
-    Spi.transfer ( reg );         //send register number
-    tmp = Spi.transfer ( 0x00 );  //send empty byte, read register contents
+    SPI.transfer ( reg );         //send register number
+    tmp = SPI.transfer ( 0x00 );  //send empty byte, read register contents
     Deselect_MAX3421E; 
     return (tmp);
 }
@@ -79,9 +80,9 @@ byte MAX3421E::regRd( byte reg )
 char * MAX3421E::bytesRd ( byte reg, byte nbytes, char  * data )
 {
     Select_MAX3421E;    //assert SS
-    Spi.transfer ( reg );     //send register number
+    SPI.transfer ( reg );     //send register number
     while( nbytes ) {
-        *data = Spi.transfer ( 0x00 );    //send empty byte, read register contents
+        *data = SPI.transfer ( 0x00 );    //send empty byte, read register contents
         data++;
         nbytes--;
     }

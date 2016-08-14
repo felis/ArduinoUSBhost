@@ -2,13 +2,12 @@
 #ifndef _MAX3421E_H_
 #define _MAX3421E_H_
 
+#include <SPI.h>
+#include "Arduino.h"
+#include <Max3421e_constants.h>
 
-#include <Spi.h>
-//#include <WProgram.h>
-#include "WProgram.h"
-#include "Max3421e_constants.h"
 
-class MAX3421E : public SPI {
+class MAX3421E : public SPIClass {
     // byte vbusState;
 
     public:
